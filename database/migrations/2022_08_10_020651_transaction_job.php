@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class TransactionJob extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+        Schema::create('transaction', function (Blueprint $table) {
+            $table->id();
+            $table->string('productionID');
+            $table->date('date')->nullable();
+            $table->boolean('status');
+            $table->string('userID');
+            $table->string('referTransfer');
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        //
     }
-};
+}
