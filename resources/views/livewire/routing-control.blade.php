@@ -66,7 +66,7 @@
             <div class="dialog-title">Add New Routing</div>
             <div class="dialog-content">
                 <div class="row">
-                    <div class="cell-3">Name</div>
+                    <div class="cell-3">User</div>
                     <div class="cell-8">
                         <select required data-role="select" onChange="update1()" id="option1">
                             <option value="">Select User</option>
@@ -85,12 +85,6 @@
                             <option value="2">Quality Control</option>
                             <option value="3">Warehouse</option>
                         </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="cell-3">Level</div>
-                    <div class="cell-8"><input data-role="input" wire:model.defer="level_add" data-clear-button="true"
-                            required type="number">
                     </div>
                 </div>
             </div>
@@ -120,12 +114,6 @@
                             <option value="2">Quality Control</option>
                             <option value="3">Warehouse</option>
                         </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="cell-3">Level</div>
-                    <div class="cell-8"><input data-role="input" wire:model.defer="level_edit"
-                            data-clear-button="false" required type="number">
                     </div>
                 </div>
             </div>

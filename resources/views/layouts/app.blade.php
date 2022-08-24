@@ -62,11 +62,11 @@
                     <a href="#" class="dropdown-toggle">{{ Auth::user()->name }}</a>
                     <ul class="d-menu place-right" data-role="dropdown">
                         @can('isAdmin')
-                        <li><a href="{{route('routing_control')}}">Routing Control</a></li>
                         <li><a href="{{route('product_control')}}">Product Control</a></li>
                         <li><a href="{{route('user_control')}}">User Control</a></li>
                         @endcan
                         @can('isDeveloper')
+                        <li><a href="{{route('routing_control')}}">Routing Control</a></li>
                         <li><a href="{{route('log_record')}}">Log Record</a></li>
                         @endcan
                         <li><a href="{{route('change_password')}}">Change Password</a></li>

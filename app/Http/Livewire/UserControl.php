@@ -31,6 +31,34 @@ class UserControl extends Component
 
     protected $listeners = ['rubah' => 'change'];
 
+    public function show_add(){
+        $this->name_add = NULL;
+        $this->nik_add = NULL;
+        $this->email_add = NULL;
+        $this->role_add = NULL;
+        $this->department_add = NULL;
+        $this->password1_add = NULL;
+        $this->password2_add = NULL;
+        $this->dispatchBrowserEvent('open_dialog_add');
+    }
+
+    public function add() {
+        if (DB::table('user')->where('username', $this->nik_add)->doesntExist() || DB::table('user')->where('email', $this->email_add)->doesntExist()) {
+            DB::table('users')->insert([
+                'name' => $this->name_add,
+                'username' => $this->nik_add,
+                'departmentID' => $this->department_add,
+                'email' => $this->email_add,
+                'line' => 0,
+                'role' => $this->role_add,
+            ]);
+            $this->dispatchBrowserEvent('toaster', ['message' => 'User Successfully Added', 'type' => 'success']);
+            $this->dispatchBrowserEvent('close_dialog_add');
+        } else {
+            $this->dispatchBrowserEvent('toaster', ['message' => 'Error Data Already Exists', 'type' => 'alert']);
+        }
+    }
+
     public function show_edit($id){
         $this->id_edit = $id;
         $this->name_edit = DB::table('users')->where('id', $id)->value('name');
@@ -78,27 +106,6 @@ class UserControl extends Component
             }
     }
 
-    public function show_add(){
-        $this->dispatchBrowserEvent('open_dialog_add');
-    }
-
-    public function add() {
-        if (DB::table('user')->where('username', $this->nik_add)->doesntExist() || DB::table('user')->where('email', $this->email_add)->doesntExist()) {
-            DB::table('users')->insert([
-                'name' => $this->name_add,
-                'username' => $this->nik_add,
-                'departmentID' => $this->department_add,
-                'email' => $this->email_add,
-                'line' => 0,
-                'role' => $this->role_add,
-            ]);
-            $this->dispatchBrowserEvent('toaster', ['message' => 'User Successfully Added', 'type' => 'success']);
-            $this->dispatchBrowserEvent('close_dialog_add');
-        } else {
-            $this->dispatchBrowserEvent('toaster', ['message' => 'Error Data Already Exists', 'type' => 'alert']);
-        }
-    }
-
     public function show_delete($id){
         $this->id_delete   = $id;
         $name_delete       = DB::table('users')->where('id', $id)->value('name');
@@ -127,7 +134,7 @@ class UserControl extends Component
 
     public function render()
     {
-        $this->users = DB::table('users')->leftJoin('department_list', 'users.departmentID', '=', 'department_list.id')->where('users.departmentID', '<>', 999)
+        $this->users = DB::table('users')->leftJoin('department_list', 'users.department', '=', 'department_list.id')->where('users.department', '<>', 999)
         ->select('users.id as id', 'users.name as name', 'users.username as username', 'users.role as role',
         'department_list.department as department', 'users.email as email')->get();
         return view('livewire.user-control');
