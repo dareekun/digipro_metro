@@ -17,7 +17,6 @@ class TransactionJob extends Migration
             $table->id();
             $table->string('productionID');
             $table->date('date')->nullable();
-            $table->boolean('status');
             $table->string('userID');
             $table->string('referTransfer');
         });

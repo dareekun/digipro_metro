@@ -13,17 +13,15 @@
             <div class="card-body">
                 <div class="container">
                     <div class="row">
-                        <div class="cell-4">
-                            <input type="text" wire:model.lazy="search" data-role="input" name="search" id="search"
-                                data-prepend="Search: ">
-                        </div>
+                        <div class="cell-md-4 my-search-wrapper"></div>
                         <div class="cell-8" align="right">
                             <button class="button primary" wire:click="show_add">Add Routing</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="cell-12">
-                            <table class="table table-striped table-border cell-border">
+                            <table class="table striped table-border mt-4" data-role="table" data-rownum="true"
+                                data-search-wrapper=".my-search-wrapper" data-show-rows-steps="false">
                                 <thead>
                                     <tr>
                                         <th style="width:50px">No</th>

@@ -1,33 +1,36 @@
 @extends('layouts.app')
 @section('content')
-<livewire:product-control/>
+<livewire:product-control />
 @stop
 @push('scripts')
 <script>
-function update1() {
-    window.livewire.emit('rubah', { data : document.getElementById("option1").value, pos : 1});
+let halaman = 1;
+
+function throw_edit(id_edit) {
+    halaman = Number(document.getElementsByClassName('active')[1].textContent);
+    console.log(halaman);
+    window.livewire.emit('edit_open', {
+        data: id_edit
+    });
 }
-function update2() {
-    window.livewire.emit('rubah', { data : document.getElementById("option2").value, pos : 2 });
+
+function throw_delete(id_delete) {
+    halaman = Number(document.getElementsByClassName('active')[1].textContent);
+    window.livewire.emit('delete_throw', {
+        data: id_delete
+    });
 }
-function update3() {
-    window.livewire.emit('rubah', { data : document.getElementById("option3").value, pos : 3 });
-}
-function update4() {
-    window.livewire.emit('rubah', { data : document.getElementById("option4").value, pos : 4 });
-}
-window.addEventListener('toaster', event => {
-    var options = {
-        showTop: true,
-        timeout: 2000,
-        distance: 80,
-        clsToast: event.detail.type
-    };
-    Metro.toast.create(event.detail.message, null, null, null, options);
+
+window.addEventListener('keep_pages', event => {
+    setTimeout(function() {
+        Metro.getPlugin('#tables12', 'table').page(halaman);
+    }, 50);
 });
+
 window.addEventListener('open_dialog_add', event => {
     Metro.dialog.open('#add_product');
 });
+
 window.addEventListener('close_dialog_add', event => {
     Metro.dialog.close('#add_product');
 });

@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'DigiPro') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/metro.css') }}" rel="stylesheet">
@@ -103,6 +103,10 @@
             clsToast: event.detail.type
         };
         Metro.toast.create(event.detail.message, null, null, null, options);
+    });
+
+    window.addEventListener('console_log', event => {
+        console.log(event.detail.message);
     });
     </script>
 </body>

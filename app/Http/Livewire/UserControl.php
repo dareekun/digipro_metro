@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UserControl extends Component
 {
-    
-    public $i = 1;
-
     public $name_add;
     public $nik_add;
     public $email_add;
@@ -28,8 +25,12 @@ class UserControl extends Component
     public $department_edit;
     public $password1_edit;
     public $password2_edit;
-
-    protected $listeners = ['rubah' => 'change'];
+        
+    protected $listeners = [
+        'edit_open' => 'show_edit', 
+        'delete_open' => 'show_delete',
+        'rubah' => 'change'
+    ];
 
     public function show_add(){
         $this->name_add = NULL;
@@ -59,14 +60,14 @@ class UserControl extends Component
         }
     }
 
-    public function show_edit($id){
-        $this->id_edit = $id;
-        $this->name_edit = DB::table('users')->where('id', $id)->value('name');
-        $this->email_edit = DB::table('users')->where('id', $id)->value('email');
-        $this->department_edit = DB::table('users')->where('id', $id)->value('departmentID');
-        $this->role_edit = DB::table('users')->where('id', $id)->value('role');
-        $this->password1_edit = NULL;
-        $this->password2_edit = NULL;
+    public function show_edit($payload){
+        $this->id_edit         = $payload['data'];
+        $this->name_edit       = DB::table('users')->where('id', $this->id_edit)->value('name');
+        $this->email_edit      = DB::table('users')->where('id', $this->id_edit)->value('email');
+        $this->department_edit = DB::table('users')->where('id', $this->id_edit)->value('department');
+        $this->role_edit       = DB::table('users')->where('id', $this->id_edit)->value('role');
+        $this->password1_edit  = NULL;
+        $this->password2_edit  = NULL;
         $this->dispatchBrowserEvent('open_dialog_edit', ['department' => $this->department_edit, 'role' => $this->role_edit ]);
     }
 
@@ -106,11 +107,11 @@ class UserControl extends Component
             }
     }
 
-    public function show_delete($id){
-        $this->id_delete   = $id;
-        $name_delete       = DB::table('users')->where('id', $id)->value('name');
-        $nik_delete        = DB::table('users')->where('id', $id)->value('username');
-        $department_delete = DB::table('users')->leftJoin('department_list', 'users.departmentID', '=', 'department_list.id')->where('users.id', $id)->value('department_list.department');
+    public function show_delete($payload){
+        $this->id_delete   = $payload['data'];
+        $name_delete       = DB::table('users')->where('id', $this->id_delete)->value('name');
+        $nik_delete        = DB::table('users')->where('id', $this->id_delete)->value('username');
+        $department_delete = DB::table('users')->leftJoin('department_list', 'users.department', '=', 'department_list.id')->where('users.id', $this->id_delete)->value('department_list.department');
         $this->dispatchBrowserEvent('open_dialog_delete', ['name' => $name_delete, 'nik' => $nik_delete, 'department' => $department_delete]);
     }
 
@@ -135,8 +136,8 @@ class UserControl extends Component
     public function render()
     {
         $this->users = DB::table('users')->leftJoin('department_list', 'users.department', '=', 'department_list.id')->where('users.department', '<>', 999)
-        ->select('users.id as id', 'users.name as name', 'users.username as username', 'users.role as role',
-        'department_list.department as department', 'users.email as email')->get();
+        ->select('users.id as id', 'users.name as name', 'users.username as username', 'users.role as role', 'department_list.department as department', 
+        'users.email as email')->get();
         return view('livewire.user-control');
     }
 }

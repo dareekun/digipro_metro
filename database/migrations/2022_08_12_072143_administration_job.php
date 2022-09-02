@@ -17,7 +17,7 @@ class AdministrationJob extends Migration
             $table->id();
             $table->string('refer');
             $table->date('date')->nullable();
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->string('userID');
         });
     }

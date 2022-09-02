@@ -16,6 +16,12 @@ function update3() {
 function update4() {
     window.livewire.emit('rubah', { data : document.getElementById("option4").value, pos : 4 });
 }
+function show_edit (id_edit) {
+    window.livewire.emit('edit_open', { data : id_edit});
+}
+function show_delete (id_delete) {
+    window.livewire.emit('delete_open', { data : id_delete});
+}
 window.addEventListener('toaster', event => {
     var options = {
         showTop: true,

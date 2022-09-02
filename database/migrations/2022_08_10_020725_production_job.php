@@ -28,6 +28,7 @@ class ProductionJob extends Migration
             $table->date('date2');
             $table->string('name1');
             $table->string('name2');
+            $table->boolean('status')->default(0);
         });
     }
 
