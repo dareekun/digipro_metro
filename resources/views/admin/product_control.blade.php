@@ -5,6 +5,14 @@
 @push('scripts')
 <script>
 let halaman = 1;
+let pencarian;
+let temp_sear;
+
+window.addEventListener('console_log', event => {
+    console.log("halaman = " + halaman);
+    console.log("pencarian = " + pencarian);
+    temp_sear = pencarian;
+});
 
 function throw_edit(id_edit) {
     halaman = Number(document.getElementsByClassName('active')[1].textContent);
@@ -21,10 +29,18 @@ function throw_delete(id_delete) {
     });
 }
 
-window.addEventListener('keep_pages', event => {
+function last_search(text) {
+    pencarian = text;
+    console.log("last_search = " + pencarian);
+}
+
+window.addEventListener('keepes', event => {
     setTimeout(function() {
+        Metro.getPlugin('#tables12', 'table').search(temp_sear);
+        document.getElementById("table_search").value = temp_sear;
         Metro.getPlugin('#tables12', 'table').page(halaman);
     }, 50);
+    console.log('keepes terpanggil');
 });
 
 window.addEventListener('open_dialog_add', event => {

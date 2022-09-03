@@ -14,13 +14,27 @@
                 <div class="container">
                     <div class="row">
                         <div class="cell-md-4 my-search-wrapper"></div>
-                        <div class="cell-8" align="right">
-                            <button class="button primary" wire:click="show_add">New Lotcard</button>
+                        <div class="cell-8">
+                            <form method="post" action="{{route('add_lotcard')}}">
+                                @csrf
+                                <div class="row">
+                                    <div class="cell-4 offset-6">
+                                        <select required data-role="select" required id="option" name="modelno">
+                                            @foreach ($products as $product)
+                                            <option value="{{$product->id}}">{{$product->product}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="cell-2"  align="right">
+                                        <button class="button primary" type="submit">New Lotcard</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="row">
                         <div class="cell-12">
-                            <table class="table striped table-border mt-4" data-role="table" data-rownum="true"
+                            <table class="table striped table-border mt-4" data-role="table"
                                 data-search-wrapper=".my-search-wrapper" data-show-rows-steps="false">
                                 <thead>
                                     <tr>
@@ -60,7 +74,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="8" align="center"> Empty Data </td>
+                                        <td colspan="9" align="center"> Empty Data</td>
                                     </tr>
                                     @endforelse
                                 </tbody>
@@ -71,27 +85,7 @@
             </div>
         </div>
     </div>
-    <!-- Dialog New user -->
-    <div wire:ignore class="dialog" data-role="dialog" id="add_data">
-        <form wire:submit.prevent="add">
-            <div class="dialog-title">Add Data Lotcard</div>
-            <div class="dialog-content">
-                <div class="cell-3">Product Type</div>
-                <div class="cell-8">
-                    <select required data-role="select" onChange="update()" id="option">
-                        @foreach ($products as $product)
-                        <option value="{{$product->id}}">{{$product->product}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="dialog-actions">
-                <button class="button primary" type="submit">Add Data</button>
-                <button class="button warning js-dialog-close">Cancel</button>
-            </div>
-        </form>
-    </div>
-    <!-- Dialog Delete user -->
+    <!-- Dialog Delete Data -->
     <div wire:ignore class="dialog" data-role="dialog" id="delete_data">
         <div class="dialog-title">Delete Data Lotcard</div>
         <div class="dialog-content">

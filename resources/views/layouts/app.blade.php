@@ -104,10 +104,6 @@
         };
         Metro.toast.create(event.detail.message, null, null, null, options);
     });
-
-    window.addEventListener('console_log', event => {
-        console.log(event.detail.message);
-    });
     </script>
 </body>
 

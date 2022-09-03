@@ -28262,8 +28262,8 @@ $.noConflict = function() {
 
             search_block = Utils.isValue(this.wrapperSearch) ? this.wrapperSearch : $("<div>").addClass("table-search-block").addClass(o.clsSearch).appendTo(top_block);
             search_block.addClass(o.clsSearch);
-
-            search_input = $("<input>").attr("type", "text").appendTo(search_block);
+            
+            search_input = $("<input>").attr("id", "table_search").appendTo(search_block);
             Metro.makePlugin(search_input, "input", {
                 prepend: o.tableSearchTitle
             });

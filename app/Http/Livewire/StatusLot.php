@@ -14,21 +14,6 @@ class StatusLot extends Component
     public $product_delete;
     public $qty_delete;
 
-    protected $listeners = ['rubah' => 'change'];
-
-    public function change($payload){
-        $this->product_add = $payload['data'];
-    }
-
-    public function show_add(){
-        $this->name_add = NULL;
-        $this->dispatchBrowserEvent('open_dialog_add');
-    }
-
-    public function redirect_add(){
-
-    }
-
     public function show_delete($id){
         $this->uid_delete     = $id;
         $this->product_delete = DB::table('production')->where('id', '$id')->value('modelno');

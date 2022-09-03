@@ -18,10 +18,10 @@
                             <button class="button primary" wire:click="show_add">Add Product</button>
                         </div>
                     </div>
-                    <div wire:ignore class="row" id="{{$itteration}}">
+                    <div class="row">
                         <div class="cell-12">
                             <table class="table striped table-border mt-4" id="tables12" data-role="table"
-                                data-rownum="true" data-search-wrapper=".my-search-wrapper"
+                                data-rownum="true" data-search-wrapper=".my-search-wrapper"	data-on-search="last_search(arguments[0])"
                                 data-show-rows-steps="false">
                                 <thead>
                                     <tr>

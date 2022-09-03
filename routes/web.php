@@ -29,7 +29,7 @@ Route::get('/dashboard', function() {return view('dashboard');})->middleware('au
 
 Route::get('/status_lotcard', function() {return view('production.status_lot');})->middleware('auth')->name('status_job');
 Route::get('/lotcard_scanned', function() {return view('production.lot_scan');})->middleware('auth')->name('job_scanned');
-Route::get('/add_lotcard/{id}', function($id) {return view('production.add_lotcard', ['ProductID'=> $id]);})->middleware('auth')->name('add_lotcard');
+Route::post('/add_lotcard', function(Request $request) {return view('production.add_lotcard', ['ProductID'=> $request->modelno]);})->middleware('auth')->name('add_lotcard');
 
 Route::get('/inprogress_data', function() {return view('quality.progress_data');})->middleware('auth')->name('in_progress');
 Route::get('/finish_data', function() {return view('quality.finish_data');})->middleware('auth')->name('finish_production');

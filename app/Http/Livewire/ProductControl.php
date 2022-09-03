@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\DB;
 class ProductControl extends Component
 {
 
-    public $itteration = 0;
-
     public $product_add;
     public $line_add;
     public $section_add;
@@ -30,13 +28,12 @@ class ProductControl extends Component
     protected $listeners = [
         'edit_open' => 'show_edit', 
         'delete_throw' => 'show_delete',
-        'reload' => '$refresh'
     ];
 
-    public function dehydrate() {
-        $this->dispatchBrowserEvent('console_log', ['message' => 'Dehydrate is called']);
-        // $this->dispatchBrowserEvent('reload');
-    }
+    // public function dehydrate() {
+    //     $this->dispatchBrowserEvent('console_log');
+    //     // $this->dispatchBrowserEvent('reload');
+    // }
 
     public function show_add() {
         $this->product_add = NULL;
@@ -51,6 +48,7 @@ class ProductControl extends Component
         if (DB::table('product')->where('product', $this->product_add)->exists()) {
             $this->dispatchBrowserEvent('close_dialog_add');
             $this->dispatchBrowserEvent('toaster', ['message' => 'Error Product Already Exists', 'type' => 'alert']);
+            $this->dispatchBrowserEvent('keepes');
         } else {
             DB::table('product')->insert([
                 'product' => $this->product_add,
@@ -61,6 +59,7 @@ class ProductControl extends Component
             ]);
             $this->dispatchBrowserEvent('close_dialog_add');
             $this->dispatchBrowserEvent('toaster', ['message' => 'Product Successfully Add', 'type' => 'success']);
+            $this->dispatchBrowserEvent('keepes');
         }
     }
 
@@ -72,13 +71,14 @@ class ProductControl extends Component
         $this->cycle_edit = DB::table('product')->where('id', $this->uid_edit)->value('time_proc');
         $this->man_edit = DB::table('product')->where('id', $this->uid_edit)->value('std_mp');
         $this->dispatchBrowserEvent('open_dialog_edit');
+        $this->dispatchBrowserEvent('keepes');
     }
 
     public function edit() {
-        $this->itteration++;
         if (DB::table('product')->where('id', '<>' ,$this->uid_edit)->where('product', $this->product_edit)->exists()) {
             $this->dispatchBrowserEvent('close_dialog_edit');
             $this->dispatchBrowserEvent('toaster', ['message' => 'Error Product Already Exists', 'type' => 'alert']);
+            $this->dispatchBrowserEvent('keepes');
         } else {
             DB::table('product')->where('id', $this->uid_edit)->update([
                 'product' => $this->product_edit,
@@ -89,7 +89,7 @@ class ProductControl extends Component
             ]);
             $this->dispatchBrowserEvent('close_dialog_edit');
             $this->dispatchBrowserEvent('toaster', ['message' => 'Product Successfully Add', 'type' => 'success']);
-            $this->dispatchBrowserEvent('keep_pages');
+            $this->dispatchBrowserEvent('keepes');
         }
     }
 
@@ -99,12 +99,14 @@ class ProductControl extends Component
         $line    = DB::table('product')->where('id', $this->uid_delt)->value('line');
         $section = DB::table('product')->where('id', $this->uid_delt)->value('bagian');
         $this->dispatchBrowserEvent('open_dialog_delete', ['product' => $product, 'line' => $line, 'section' => $section]);
+        $this->dispatchBrowserEvent('keepes');
     }
 
     public function delete() {
         DB::table('product')->where('id', $this->uid_delt)->delete();
         $this->dispatchBrowserEvent('close_dialog_delete');
         $this->dispatchBrowserEvent('toaster', ['message' => 'Product Successfully delete', 'type' => 'warning']);
+        $this->dispatchBrowserEvent('keepes');
     }
 
     public function render()

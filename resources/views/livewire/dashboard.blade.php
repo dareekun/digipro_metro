@@ -17,7 +17,7 @@
                     </div>
                     <div class="row">
                         <div class="cell-12">
-                            <table class="table striped table-border mt-4" data-role="table" data-rownum="true"
+                            <table class="table striped table-border mt-4" data-role="table" data-rownum="false"
                                 data-search-wrapper=".my-search-wrapper" data-show-rows-steps="false">
                                 <thead>
                                     <tr>
